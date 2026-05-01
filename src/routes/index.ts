@@ -10,12 +10,47 @@ const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 const Demo= lazy(() => import('../pages/Demo'));
+const UserCreate= lazy(() => import('../pages/Users/Create'));
+const UserUpdate= lazy(() => import('../pages/Users/Update'));
+const Posts= lazy(() => import('../pages/Posts/List'));
 
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/users/list',
+    title: 'User List',
+    component: lazy(() => import('../pages/Users/List')),
+  },
+  {
+    path: '/users/create',
+    title: 'Create User',
+    component: UserCreate,
+  },
+  {
+    path: '/users/edit/:id',
+    title: 'Edit User',
+    component: UserUpdate,
+  },
+  {
+    path: '/info/list',
+    title: 'Info List',
+    component: lazy(() => import('../pages/Info/List')),
+  },
+  {
+    path: '/posts/list',
+    title: 'Posts',
+    component: Posts,
+  },
+  
+  
+  {
+    path: '/roles/list',
+    title: 'Role List',
+    component: lazy(() => import('../pages/Roles/List')),
   },
   {
     path: '/calendar',

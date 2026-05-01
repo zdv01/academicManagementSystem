@@ -24,8 +24,11 @@ const Demo: React.FC = () => {
             :
                 <h2>Flag es falso</h2>
         }
+        <label htmlFor="name-input">Name:</label>
         <input
+            id="name-input"
             type="text"
+            placeholder="Enter your name"
             value={name} // El valor del input está ligado al estado 'texto'
             onChange={manejarCambio} // Se actualiza el estado cada vez que el usuario escribe
         />
