@@ -15,11 +15,11 @@ const UserUpdate= lazy(() => import('../pages/Users/Update'));
 const Posts= lazy(() => import('../pages/Posts/List'));
 
 const coreRoutes = [
-  {
-    path: '/demo',
-    title: 'Demo',
-    component: Demo,
-  },
+  // {
+  //   path: '/demo',
+  //   title: 'Demo',
+  //   component: Demo,
+  // },
   {
     path: '/users/list',
     title: 'User List',
@@ -47,56 +47,56 @@ const coreRoutes = [
   },
   
   
-  {
-    path: '/roles/list',
-    title: 'Role List',
-    component: lazy(() => import('../pages/Roles/List')),
-  },
-  {
-    path: '/calendar',
-    title: 'Calender',
-    component: Calendar,
-  },
-  {
-    path: '/profile',
-    title: 'Profile',
-    component: Profile,
-  },
-  {
-    path: '/forms/form-elements',
-    title: 'Forms Elements',
-    component: FormElements,
-  },
-  {
-    path: '/forms/form-layout',
-    title: 'Form Layouts',
-    component: FormLayout,
-  },
-  {
-    path: '/tables',
-    title: 'Tables',
-    component: Tables,
-  },
-  {
-    path: '/settings',
-    title: 'Settings',
-    component: Settings,
-  },
-  {
-    path: '/chart',
-    title: 'Chart',
-    component: Chart,
-  },
-  {
-    path: '/ui/alerts',
-    title: 'Alerts',
-    component: Alerts,
-  },
-  {
-    path: '/ui/buttons',
-    title: 'Buttons',
-    component: Buttons,
-  },
+  // {
+  //   path: '/roles/list',
+  //   title: 'Role List',
+  //   component: lazy(() => import('../pages/Roles/List')),
+  // },
+  // {
+  //   path: '/calendar',
+  //   title: 'Calender',
+  //   component: Calendar,
+  // },
+  // {
+  //   path: '/profile',
+  //   title: 'Profile',
+  //   component: Profile,
+  // },
+  // {
+  //   path: '/forms/form-elements',
+  //   title: 'Forms Elements',
+  //   component: FormElements,
+  // },
+  // {
+  //   path: '/forms/form-layout',
+  //   title: 'Form Layouts',
+  //   component: FormLayout,
+  // },
+  // {
+  //   path: '/tables',
+  //   title: 'Tables',
+  //   component: Tables,
+  // },
+  // {
+  //   path: '/settings',
+  //   title: 'Settings',
+  //   component: Settings,
+  // },
+  // {
+  //   path: '/chart',
+  //   title: 'Chart',
+  //   component: Chart,
+  // },
+  // {
+  //   path: '/ui/alerts',
+  //   title: 'Alerts',
+  //   component: Alerts,
+  // },
+  // {
+  //   path: '/ui/buttons',
+  //   title: 'Buttons',
+  //   component: Buttons,
+  // },
 ];
 
 const routes = [...coreRoutes];
