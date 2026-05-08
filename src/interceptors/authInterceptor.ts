@@ -1,86 +1,158 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { LocalStorageProvider } from "../storage/LocalStorageProvider";
-import { StorageProvider } from "../storage/StorageProvider";
+    import axios, {
+    AxiosInstance,
+    InternalAxiosRequestConfig,
+    } from "axios";
 
-export class AuthInterceptor {
+    import AuthService from "../services/firebase/authService";
+    import { LocalStorageProvider } from "../storage/LocalStorageProvider";
+    import { StorageProvider } from "../storage/StorageProvider";
+
+    export class AuthInterceptor {
+
     private api: AxiosInstance;
+
     private storage: StorageProvider;
 
-    private EXCLUDED_ROUTES = ["/login", "/register"];
+    /**
+     * Rutas públicas
+     */
+    private EXCLUDED_ROUTES = [
+        "/login",
+        "/register",
+    ];
 
     constructor() {
-        this.storage = new LocalStorageProvider();
+
+        this.storage =
+        new LocalStorageProvider();
 
         this.api = axios.create({
-            baseURL: import.meta.env.VITE_API_URL,
-            headers: { "Content-Type": "application/json" },
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+            "Content-Type": "application/json",
+        },
         });
 
         this.initializeInterceptors();
     }
 
     /**
-     * Interceptor de request
-     * - Agrega el token automáticamente si existe
-     * - Evita rutas públicas
-     * =====>
+     * Interceptor Request
+     * - Soporta Firebase
+     * - Soporta login tradicional
      */
-    private handleRequest(config: InternalAxiosRequestConfig) {
-        //obtiene el token de localStorage
-        const token = this.storage.getItem("token");
+    private async handleRequest(
+        config: InternalAxiosRequestConfig
+    ) {
 
-        //hay rutas para las cuales no es necesario mandar el token
-        // Evitar agregar token en rutas excluidas
-        if (this.EXCLUDED_ROUTES.some((route) => config.url?.includes(route))) {
-            return config;
+        /**
+         * No agregar token
+         * en rutas públicas
+         */
+        if (
+        this.EXCLUDED_ROUTES.some(
+            (route) => config.url?.includes(route)
+        )
+        ) {
+        return config;
         }
 
-        //colocar el token en localStorage
-        // Agregar header Authorization
+        try {
+
+        let token: string | null = null;
+
+        /**
+         * 1. Intentar obtener token Firebase
+         */
+        token =
+            await AuthService.getToken();
+
+        /**
+         * 2. Si no existe Firebase,
+         * usar token clásico
+         */
+        if (!token) {
+
+            token =
+            this.storage.getItem("token");
+        }
+
+        /**
+         * 3. Agregar Authorization
+         */
         if (token) {
-            config.headers = config.headers || {};
-            config.headers.Authorization = `Bearer ${token}`;
+
+            config.headers =
+            config.headers || {};
+
+            config.headers.Authorization =
+            `Bearer ${token}`;
+        }
+
+        } catch (error) {
+
+        console.error(
+            "Error obteniendo token:",
+            error
+        );
         }
 
         return config;
     }
 
     /**
-     * Interceptor de errores
-     * - Maneja sesiones expiradas (401)
-     * <=====
+     * Manejo de errores
      */
     private handleResponseError(error: any) {
+
         if (error.response?.status === 401) {
-            console.log("No autorizado, redirigiendo a login...");
-            window.location.href = "/auth/signin";
+
+        console.log(
+            "Sesión expirada"
+        );
+
+        /**
+         * Limpiar storage
+         */
+        this.storage.removeItem("token");
+        this.storage.removeItem("user");
+
+        /**
+         * Redirigir login
+         */
+        window.location.href =
+            "/auth/signin";
         }
 
         return Promise.reject(error);
     }
 
     /**
-     * Inicializa interceptores
+     * Inicializar interceptores
      */
     private initializeInterceptors() {
+
         this.api.interceptors.request.use(
-            this.handleRequest.bind(this),
-            (error) => Promise.reject(error)
+        this.handleRequest.bind(this),
+        (error) => Promise.reject(error)
         );
 
         this.api.interceptors.response.use(
-            (response) => response,
-            this.handleResponseError.bind(this)
+        (response) => response,
+        this.handleResponseError.bind(this)
         );
     }
 
     /**
-     * Expone instancia de axios
+     * Exponer instancia axios
      */
     public get instance(): AxiosInstance {
         return this.api;
     }
-}
+    }
 
-// Instancia global reutilizable
-export const api = new AuthInterceptor().instance;
+    /**
+     * Instancia global
+     */
+    export const api =
+    new AuthInterceptor().instance;
