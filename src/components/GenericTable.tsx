@@ -12,7 +12,32 @@ interface GenericTableProps {
     onAction: (name: string, item: Record<string, any>) => void;
 }
 
-const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onAction }) => {
+const GenericTable: React.FC<GenericTableProps> = ({
+    data,
+    columns,
+    actions,
+    onAction,
+}) => {
+    const getValueClass = (value: any, column: string) => {
+        if (value === "Active") {
+            return "meta-3 font-semibold";
+        }
+
+        if (value === "Inactive") {
+            return "danger font-semibold";
+        }
+
+        if (column.toLowerCase().includes("email")) {
+            return "meta-5";
+        }
+
+        if (column.toLowerCase().includes("code")) {
+            return "meta-6 font-mono";
+        }
+
+        return "black";
+    };
+
     return (
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="max-w-full overflow-x-auto">
@@ -23,7 +48,9 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
                                 <th
                                     key={col}
                                     className={`py-4 px-4 font-medium text-black dark:text-white ${
-                                        index === 0 ? "min-w-[220px] xl:pl-11" : "min-w-[150px]"
+                                        index === 0
+                                            ? "min-w-[220px] xl:pl-11"
+                                            : "min-w-[150px]"
                                     }`}
                                 >
                                     {col}
@@ -42,10 +69,13 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
                                     <td
                                         key={col}
                                         className={`border-b border-[#eee] py-5 px-4 dark:border-strokedark ${
-                                            colIndex === 0 ? "pl-9 xl:pl-11" : ""
+                                            colIndex === 0
+                                                ? "pl-9 xl:pl-11"
+                                                : ""
                                         }`}
                                     >
-                                        <p className="text-black dark:text-white">
+                                        <p className={getValueClass(item[col], col)}>
+                                            {console.log("esto es item y el otro es item[col]",item, "   " , item[col])}
                                             {item[col]}
                                         </p>
                                     </td>
@@ -56,23 +86,19 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
                                         {actions.map((action) => (
                                             <button
                                                 key={action.name}
-                                                onClick={() => onAction(action.name, item)}
+                                                onClick={() =>
+                                                    onAction(action.name, item)
+                                                }
                                                 type="button"
-                                                className={`rounded-md border border-stroke px-2 py-1 text-xs font-medium transition
-                                                    hover:bg-gray-2 dark:border-strokedark
+                                                className={`rounded-md border border-stroke px-2 py-1 text-xs font-medium transition hover:bg-gray-2 dark:border-strokedark
                                                     ${
-                                                        action.name === "delete"
+                                                        action.name === "deactivate"
                                                             ? "text-red-500 hover:bg-red-100"
                                                             : ""
                                                     }
                                                     ${
-                                                        action.name === "view"
+                                                        action.name === "edit"
                                                             ? "text-blue-500 hover:bg-blue-100"
-                                                            : ""
-                                                    }
-                                                    ${
-                                                        action.name === "download"
-                                                            ? "text-green-500 hover:bg-green-100"
                                                             : ""
                                                     }
                                                 `}

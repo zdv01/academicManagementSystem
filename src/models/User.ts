@@ -1,11 +1,11 @@
+//modelo para visualizacion de usuarios en tablas
 export interface User {
-    id?: number;
-    name?: string;
-    email?: string;
-    password?:string;
-    age?: number;
-    city?: string;
-    phone?: string;
-    is_active?: boolean;
-    token?:string;
+    code: string;
+    fullName: string;
+    email: string;
+    role: "ADMIN" | "STUDENT" | "TEACHER" | string;
+    specialty?: string;
+    career?: string;
+    isActive: string;
+    createdAt: string;
 }
