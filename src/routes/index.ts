@@ -4,6 +4,7 @@ const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
 const Posts= lazy(() => import('../pages/Posts/List'));
 const usersList = lazy(() => import('../pages/Users/List'))
+const AssociateRubric = lazy(() => import('../pages/Evaluations/AssociateRubric'));
 
 const coreRoutes = [
   {
@@ -26,6 +27,11 @@ const coreRoutes = [
     title: 'Posts',
     component: Posts,
   },
+  {
+  path: '/evaluations/associate-rubric',
+  title: 'Associate Rubric',
+  component: AssociateRubric,
+},
 ];
 
 const routes = [...coreRoutes];
