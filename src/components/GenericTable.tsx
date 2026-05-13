@@ -75,7 +75,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
                                         }`}
                                     >
                                         <p className={getValueClass(item[col], col)}>
-                                            {console.log("esto es item y el otro es item[col]",item, "   " , item[col])}
                                             {item[col]}
                                         </p>
                                     </td>

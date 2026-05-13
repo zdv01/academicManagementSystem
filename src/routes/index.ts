@@ -3,10 +3,16 @@ import { lazy } from 'react';
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
 const Posts= lazy(() => import('../pages/Posts/List'));
-const usersList = lazy(() => import('../pages/Users/List'))
+//En users list faltala carrera(via matricula)
+const usersList = lazy(() => import('../pages/Users/Users'))
 const AssociateRubric = lazy(() => import('../pages/Evaluations/AssociateRubric'));
+// const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
+  // {
+  //   path: "/prove",
+  //   component: prb,
+  // },
   {
     path: '/users',
     title: 'User List',

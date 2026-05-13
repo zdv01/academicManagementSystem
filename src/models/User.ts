@@ -1,6 +1,7 @@
 //modelo para visualizacion de usuarios en tablas
 export interface User {
     code: string;
+    id: string;
     fullName: string;
     email: string;
     role: "ADMIN" | "STUDENT" | "TEACHER" | string;
