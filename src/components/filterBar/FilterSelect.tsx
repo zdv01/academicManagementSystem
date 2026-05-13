@@ -1,4 +1,4 @@
-import { SelectFilter } from "../../models/filterBar";
+import { SelectFilter } from "../../models/props/filterBar";
 
 interface Props {
     filter: SelectFilter;

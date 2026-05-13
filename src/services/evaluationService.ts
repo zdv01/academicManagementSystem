@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Evaluation } from "../models/Evaluation";
-import { ApiResponseUsers } from "../models/apiResponseUsers";
+import { ApiResponseUsers } from "../dto/apiResponseUsers";
 
 const API_URL = import.meta.env.VITE_API_URL + "/evaluation/evaluations" || "";
 

@@ -5,9 +5,13 @@ export interface ApiUser {
     role: string;
     is_active: boolean;
     created_at: string;
+
     profile?: {
         first_name: string;
         last_name: string;
+
+        identification?: string;
+        phone?: string;
         specialty?: string;
     };
 }

@@ -1,4 +1,4 @@
-import { Field } from "../../models/userFormCard";
+import { Field } from "../../models/props/userFormCard";
 
 interface Props {
     field: Field;

@@ -3,7 +3,7 @@ import FilterSelect from "./FilterSelect";
 
 import {
     FilterBarProps
-} from "../../models/filterBar";
+} from "../../models/props/filterBar";
 
 import {
     RotateCcw,

@@ -4,7 +4,7 @@ import SectionTabs from "./SectionTabs";
 
 import {
     UserFormCardProps
-} from "../../models/userFormCard";
+} from "../../models/props/userFormCard";
 
 export default function UserFormCard({
     title,

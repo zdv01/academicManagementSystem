@@ -3,6 +3,10 @@ export interface User {
     code: string;
     id: string;
     fullName: string;
+    firstName?: string;
+    lastName?: string;
+    identification?: string;
+    phone?: string;
     email: string;
     role: "ADMIN" | "STUDENT" | "TEACHER" | string;
     specialty?: string;

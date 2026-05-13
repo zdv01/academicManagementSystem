@@ -4,9 +4,11 @@ import GenericTable from "../../components/GenericTable";
 import { userService } from "../../services/userService";
 import Swal from "sweetalert2";
 // import { useNavigate } from "react-router-dom";
-import { ApiUser } from "../../models/apiUser";
+import { ApiUser } from "../../dto/apiUser";
+import { UpdateUserRequest } from "../../dto/updateUserRequest";
 import UserFormCard from "../../components/userFormCard/UserFormCard";
 import FilterBar from "../../components/filterBar/FilterBar";
+import { CreateUserRequest } from "../../dto/createUserRequest";
 
 const Users: React.FC = () => {
 
@@ -29,6 +31,7 @@ const Users: React.FC = () => {
     const [activeSection, setActiveSection] =
     useState("Datos de usuario");
 
+    //data reflejada en los inputs de edit/create
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -46,21 +49,35 @@ const Users: React.FC = () => {
         fetchData();
     }, []);
 
-    // mapea la respuesta del backend (contenida en ApiUser) para convertirla a User
+    // formato de mapeo de la respuesta del backend (contenida en ApiUser) para convertirla a User
     const mapUser = (u: ApiUser): User => {
-        return {
-            code: u.code,
-            id: u.id,
-            email: u.email,
-            role: u.role,
-            isActive: u.is_active == true ? "Active" : "Inactive",
-            createdAt: u.created_at,
-            specialty: u.profile?.specialty,
-            fullName:
-                `${u.profile?.first_name ?? "No name"} ${u.profile?.last_name ?? ""}`.trim(),
+    return {
+        code: u.code,
+        id: u.id,
+
+        email: u.email,
+
+        role: u.role,
+
+        isActive: u.is_active
+            ? "Active"
+            : "Inactive",
+
+        createdAt: u.created_at,
+
+        specialty: u.profile?.specialty,
+
+        firstName: u.profile?.first_name,
+        lastName: u.profile?.last_name,
+
+        identification: u.profile?.identification,
+
+        phone: u.profile?.phone,
+
+        fullName:
+            `${u.profile?.first_name ?? "No name"} ${u.profile?.last_name ?? ""}`.trim(),
         };
     };
-
     const fetchData = async () => {
 
         try {
@@ -90,10 +107,10 @@ const Users: React.FC = () => {
                 code: item.code ?? "",
                 role: item.role ?? "",
 
-                firstName: "",
-                lastName: "",
-                phone: "",
-                document: "",
+                firstName: item.firstName ?? "",
+                lastName: item.lastName ?? "",
+                phone: item.phone ?? "",
+                document: item.identification ?? "",
                 specialty: item.specialty ?? "",
             });
 
@@ -111,7 +128,6 @@ const Users: React.FC = () => {
                 confirmButtonText: "Sí, desactivar",
             }).then(async (result) => { // Agregamos async aquí
                 if (result.isConfirmed) {
-                    // IMPORTANTE: Esperar la respuesta del servidor
                     const success = await userService.deactivateUser(item.id);
 
                     if (success) {
@@ -150,7 +166,7 @@ const Users: React.FC = () => {
     //para crear usuario 
     const handleSaveUser = async () => {
 
-        const payload = {
+        const payload: CreateUserRequest = {
             email: formData.email,
             password: formData.password,
             code: formData.code,
@@ -322,7 +338,7 @@ const Users: React.FC = () => {
                     onClick: handleCreate,
                 }}
             />
-
+            {/* la paginacion se hace dentro de generic table bajo propio criterio ya que el backend no me proporciona info sobre eso */}
             <GenericTable
                 data={filteredData}
                 columns={[
@@ -338,6 +354,7 @@ const Users: React.FC = () => {
                     { name: "deactivate", label: "Deactivate" },
                 ]}
                 onAction={handleAction}
+                pageSize={5}
             />
 
             {
