@@ -5,6 +5,15 @@ import { evaluationService } from "../../services/evaluationService";
 import { rubricService } from "../../services/rubricService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+interface Criterion {
+  id: string;
+  name: string;
+  description: string;
+  weight: number;
+  rubric_id: string;
+}
 
 const AssociateRubric: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +24,7 @@ const AssociateRubric: React.FC = () => {
   // Estado del formulario
   const [selectedEvaluation, setSelectedEvaluation] = useState<Evaluation | null>(null);
   const [selectedRubric, setSelectedRubric] = useState<Rubric | null>(null);
+  const [rubricCriteria, setRubricCriteria] = useState<Criterion[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Cargar datos al montar el componente
@@ -37,7 +47,24 @@ const AssociateRubric: React.FC = () => {
     setLoading(false);
   };
 
-  // Validar que puede pasar al siguiente paso
+  // Cargar criterios cuando se selecciona una rúbrica
+  const handleRubricSelect = async (rubric: Rubric) => {
+    setSelectedRubric(rubric);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/evaluation/criteria`
+      );
+      const allCriteria = response.data.data;
+      const filteredCriteria = allCriteria.filter(
+        (c: Criterion) => c.rubric_id === rubric.id
+      );
+      setRubricCriteria(filteredCriteria);
+    } catch (error) {
+      console.error("Error cargando criterios:", error);
+      setRubricCriteria([]);
+    }
+  };
+
   const canProceed = () => {
     if (step === 1) return selectedEvaluation !== null;
     if (step === 2) return selectedRubric !== null;
@@ -80,7 +107,7 @@ const AssociateRubric: React.FC = () => {
         "Rúbrica asociada correctamente",
         "success"
       ).then(() => {
-        navigate("/evaluations"); // Redirige a lista de evaluaciones
+        navigate("/");
       });
     } else {
       Swal.fire("Error", "No se pudo asociar la rúbrica", "error");
@@ -137,7 +164,7 @@ const AssociateRubric: React.FC = () => {
               {rubrics.map((rubric) => (
                 <div
                   key={rubric.id}
-                  onClick={() => setSelectedRubric(rubric)}
+                  onClick={() => handleRubricSelect(rubric)}
                   className={`cursor-pointer p-4 border rounded-md transition ${
                     selectedRubric?.id === rubric.id
                       ? "border-primary bg-primary bg-opacity-10"
@@ -148,6 +175,9 @@ const AssociateRubric: React.FC = () => {
                     {rubric.title}
                   </p>
                   <p className="text-sm text-gray-5">{rubric.description}</p>
+                  <p className="text-xs text-gray-4 mt-2">
+                    Publicada: {new Date(rubric.created_at).toLocaleDateString()}
+                  </p>
                 </div>
               ))}
             </div>
@@ -156,33 +186,90 @@ const AssociateRubric: React.FC = () => {
 
         {/* PASO 3: Confirmar */}
         {step === 3 && (
-          <div>
-            <h4 className="mb-4 font-semibold text-black dark:text-white">
-              Resumen de la Asociación
-            </h4>
-            <div className="space-y-4">
-              <div className="p-4 bg-gray-2 rounded-md dark:bg-meta-4">
-                <p className="text-sm text-gray-5">Evaluación Seleccionada:</p>
-                <p className="font-semibold text-black dark:text-white">
-                  {selectedEvaluation?.name}
-                </p>
+          <div className="space-y-6">
+            {/* Información de la Evaluación */}
+            <div>
+              <h4 className="mb-3 font-semibold text-black dark:text-white">
+                Evaluación Seleccionada
+              </h4>
+              <div className="grid grid-cols-2 gap-4 p-4 bg-gray-2 rounded-md dark:bg-meta-4">
+                <div>
+                  <p className="text-sm text-gray-5">Nombre:</p>
+                  <p className="font-semibold text-black dark:text-white">
+                    {selectedEvaluation?.name}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-5">Ponderación:</p>
+                  <p className="font-semibold text-black dark:text-white">
+                    {selectedEvaluation?.weight}%
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-gray-5">Descripción:</p>
+                  <p className="text-sm text-black dark:text-white">
+                    {selectedEvaluation?.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-5">Creada:</p>
+                  <p className="text-sm text-black dark:text-white">
+                    {new Date(selectedEvaluation?.created_at || "").toLocaleDateString()}
+                  </p>
+                </div>
               </div>
-              <div className="p-4 bg-gray-2 rounded-md dark:bg-meta-4">
-                <p className="text-sm text-gray-5">Rúbrica Seleccionada:</p>
-                <p className="font-semibold text-black dark:text-white">
-                  {selectedRubric?.title}
-                </p>
+            </div>
+
+            {/* Información de la Rúbrica */}
+            <div>
+              <h4 className="mb-3 font-semibold text-black dark:text-white">
+                Rúbrica Seleccionada
+              </h4>
+              <div className="p-4 bg-gray-2 rounded-md dark:bg-meta-4 space-y-4">
+                <div>
+                  <p className="text-sm text-gray-5">Título:</p>
+                  <p className="font-semibold text-black dark:text-white">
+                    {selectedRubric?.title}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-5">Descripción:</p>
+                  <p className="text-sm text-black dark:text-white">
+                    {selectedRubric?.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-5 mb-2">Criterios ({rubricCriteria.length}):</p>
+                  <div className="space-y-2">
+                    {rubricCriteria.map((criterion) => (
+                      <div key={criterion.id} className="text-sm border-l-2 border-primary pl-3">
+                        <p className="font-medium text-black dark:text-white">
+                          {criterion.name} ({criterion.weight}%)
+                        </p>
+                        <p className="text-gray-5">{criterion.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-5">Publicada:</p>
+                  <p className="text-sm text-black dark:text-white">
+                    {new Date(selectedRubric?.created_at || "").toLocaleDateString()}
+                  </p>
+                </div>
               </div>
-              <div className="p-4 bg-yellow-2 rounded-md border border-yellow">
-                <p className="text-sm text-yellow-3">
-                  ⚠️ Una vez asociada, no podrás cambiar la rúbrica si ya hay calificaciones.
-                </p>
-              </div>
+            </div>
+
+            {/* Advertencia */}
+            <div className="p-4 bg-yellow-2 rounded-md border border-yellow">
+              <p className="text-sm text-yellow-3">
+                ⚠️ Una vez asociada, no podrás cambiar la rúbrica si ya hay calificaciones.
+              </p>
             </div>
           </div>
         )}
 
-        {/* Botones de navegación */}
+        {/* Botones */}
         <div className="flex gap-4 mt-8 justify-between">
           <button
             onClick={handleBack}
