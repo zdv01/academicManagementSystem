@@ -5,7 +5,6 @@ import { userService } from "../../services/userService";
 import Swal from "sweetalert2";
 // import { useNavigate } from "react-router-dom";
 import { ApiUser } from "../../dto/apiUser";
-import { UpdateUserRequest } from "../../dto/updateUserRequest";
 import UserFormCard from "../../components/userFormCard/UserFormCard";
 import FilterBar from "../../components/filterBar/FilterBar";
 import { CreateUserRequest } from "../../dto/createUserRequest";
@@ -166,42 +165,65 @@ const Users: React.FC = () => {
     //para crear usuario 
     const handleSaveUser = async () => {
 
-        const payload: CreateUserRequest = {
-            email: formData.email,
-            password: formData.password,
-            code: formData.code,
-            role: formData.role,
+    const payload: CreateUserRequest = {
+        email: formData.email,
+        password: formData.password,
+        code: formData.code,
+        role: formData.role,
 
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            identification: formData.document,
-        };
-
-        const createdUser =
-            await userService.createUser(payload);
-
-        if (createdUser) {
-
-            Swal.fire(
-                "Éxito",
-                "Usuario creado correctamente",
-                "success"
-            );
-
-            fetchData();
-
-            setShowForm(false);
-
-        } else {
-
-            Swal.fire(
-                "Error",
-                "No se pudo crear el usuario",
-                "error"
-            );
-        }
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        identification: formData.document,
     };
 
+    let createdUser = null;
+
+    // estudiante
+    if (formData.role === "STUDENT") {
+
+        createdUser =
+            await userService.registerStudent(payload);
+    }
+
+    // profesor
+    else if (formData.role === "TEACHER") {
+
+        createdUser =
+            await userService.registerTeacher(payload);
+    }
+
+    else {
+
+        Swal.fire(
+            "Error",
+            "Seleccione un rol válido",
+            "error"
+        );
+
+        return;
+    }
+
+    if (createdUser) {
+
+        Swal.fire(
+            "Éxito",
+            "Usuario creado correctamente",
+            "success"
+        );
+
+        fetchData();
+
+        setShowForm(false);
+
+    } else {
+
+        Swal.fire(
+            "Error",
+            "No se pudo crear el usuario",
+            "error"
+        );
+    }
+};
 //para actualizar usuario
     const handleUpdateUser = async () => {
 
@@ -256,7 +278,9 @@ const Users: React.FC = () => {
         setStatusFilter("");
     };
 
-    const filteredData = data.filter((user) => {
+    const filteredData = data
+    .filter((user) => user.role !== "ADMIN")
+    .filter((user) => {
 
         const matchesSearch =
             user.fullName?.toLowerCase().includes(search.toLowerCase()) ||
@@ -282,9 +306,7 @@ const Users: React.FC = () => {
     return (
 
         <div className="space-y-4">
-
-            <h1>User List</h1>
-
+            <h1>USERS</h1>
             <FilterBar
                 searchPlaceholder="Buscar usuario..."
                 searchValue={search}

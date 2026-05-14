@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { User } from '../models/User';
-//OJO USER NO DEBO USARLO, USEMOS EL USERRESPONSE MODELO
 import { ApiResponseUsers } from '../dto/apiResponseUsers';
 import { CreateUserRequest } from '../dto/createUserRequest';
 import { UpdateUserRequest } from '../dto/updateUserRequest';
@@ -58,6 +57,42 @@ class UserService {
         } catch (error) {
             console.error('Error al desactivar usuario:', error);
             return false;
+        }
+    }
+
+    async registerStudent(user: CreateUserRequest): Promise<ApiUser | null> {
+    try {
+
+        const response = await axios.post<{ data: any }>(
+            `${API_URL}/public/register-student`,
+            user
+        );
+
+        return response.data.data;
+
+    } catch (error) {
+
+        console.error('Error al crear estudiante:', error);
+
+        return null;
+    }
+}
+
+async registerTeacher(user: CreateUserRequest): Promise<ApiUser | null> {
+        try {
+
+            const response = await axios.post<{ data: any }>(
+                `${API_URL}/public/register-teacher`,
+                user
+            );
+
+            return response.data.data;
+
+        } catch (error) {
+
+            console.error('Error al crear profesor:', error);
+
+            return null;
         }
     }
 }
