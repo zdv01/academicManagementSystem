@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { User } from '../models/User';
-import { ApiResponseUsers } from '../dto/apiResponseUsers';
+import { ApiResponse } from '../dto/apiResponse';
 import { CreateUserRequest } from '../dto/createUserRequest';
 import { UpdateUserRequest } from '../dto/updateUserRequest';
 import { ApiUser } from '../dto/apiUser';
@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL + '/users' || '';
 class UserService {
     async getUsers(): Promise<User[]> {
         try {
-            const response = await axios.get<ApiResponseUsers<any[]>>(API_URL);
+            const response = await axios.get<ApiResponse<any[]>>(API_URL);
 
             return response.data.data; //de ese json extraemos data[] que contiene a los usuarios
         } catch (error) {
@@ -20,7 +20,7 @@ class UserService {
 
     // async getUserById(code: string): Promise<User | null> {
     //     try {
-    //         const response = await axios.get<ApiResponseUsers<any[]>>(`${API_URL}/${code}`);
+    //         const response = await axios.get<ApiResponse<any[]>>(`${API_URL}/${code}`);
     //         return response.data.data;
     //     } catch (error) {
     //         console.error("Usuario no encontrado:", error);

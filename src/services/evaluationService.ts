@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Evaluation } from "../models/Evaluation";
-import { ApiResponseUsers } from "../dto/apiResponseUsers";
+import { ApiResponse } from "../dto/apiResponse";
 
 const API_URL = import.meta.env.VITE_API_URL + "/evaluation/evaluations" || "";
 
 class EvaluationService {
     async getEvaluations(): Promise<Evaluation[]> {
         try {
-            const response = await axios.get<ApiResponseUsers<Evaluation[]>>(API_URL);
+            const response = await axios.get<ApiResponse<Evaluation[]>>(API_URL);
             return response.data.data;
         } catch (error) {
             console.error("Error al obtener evaluaciones:", error);
