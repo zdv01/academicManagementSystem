@@ -2,8 +2,10 @@ import { lazy } from 'react';
 
 // const Posts= lazy(() => import('../pages/Posts/List'));
 //En users list faltala carrera(via matricula)
-const usersList = lazy(() => import('../pages/Users/Users'))
+const usersPage = lazy(() => import('../pages/Users/Users'));
 const AssociateRubric = lazy(() => import('../pages/Evaluations/AssociateRubric'));
+const careersPage = lazy(() => import('../pages/Careers/Career'));
+const semestersPage = lazy(() => import('../pages/Semesters/Semester'));
 // const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
@@ -14,13 +16,23 @@ const coreRoutes = [
   {
     path: '/users',
     title: 'User List',
-    component: usersList,
+    component: usersPage,
   },
   {
-  path: '/evaluations/associate-rubric',
-  title: 'Associate Rubric',
-  component: AssociateRubric,
-},
+    path: '/evaluations/associate-rubric',
+    title: 'Associate Rubric',
+    component: AssociateRubric,
+  },
+  {
+    path: '/careers',
+    title: 'Careers',
+    component: careersPage,
+  },
+  {
+    path: '/semesters',
+    title: 'Semesters',
+    component: semestersPage,
+  },
 ];
 
 const routes = [...coreRoutes];
