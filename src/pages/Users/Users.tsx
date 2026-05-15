@@ -4,10 +4,10 @@ import GenericTable from "../../components/GenericTable";
 import { userService } from "../../services/userService";
 import Swal from "sweetalert2";
 // import { useNavigate } from "react-router-dom";
-import { ApiUser } from "../../dto/apiUser";
+import { ApiUser } from "../../models/dto/apiUser";
 import UserFormCard from "../../components/userFormCard/UserFormCard";
 import FilterBar from "../../components/filterBar/FilterBar";
-import { CreateUserRequest } from "../../dto/createUserRequest";
+import { CreateUserRequest } from "../../models/dto/createUserRequest";
 
 const Users: React.FC = () => {
 

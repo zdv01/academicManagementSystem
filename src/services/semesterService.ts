@@ -2,13 +2,13 @@ import axios from "axios";
 
 import { Semester } from "../models/Semester";
 
-import { ApiSemester } from "../dto/apiSemester";
+import { ApiSemester } from "../models/dto/apiSemester";
 
-import { ApiResponse } from "../dto/apiResponse";
+import { ApiResponse } from "../models/dto/apiResponse";
 
-import { CreateSemesterRequest } from "../dto/createSemesterRequest";
+import { CreateSemesterRequest } from "../models/dto/createSemesterRequest";
 
-import { UpdateSemesterRequest } from "../dto/updateSemesterRequest";
+import { UpdateSemesterRequest } from "../models/dto/updateSemesterRequest";
 
 const API_URL =
     import.meta.env.VITE_API_URL +

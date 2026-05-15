@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rubric } from "../models/Rubric";
-import { ApiResponse } from "../dto/apiResponse";
+import { ApiResponse } from "../models/dto/apiResponse";
 
 const API_URL = import.meta.env.VITE_API_URL + "/evaluation/rubrics" || "";
 

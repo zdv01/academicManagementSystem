@@ -10,8 +10,8 @@ import { Career } from "../../models/Career";
 
 import { careerService } from "../../services/careerService";
 
-import { CreateCareerRequest } from "../../dto/createCareerRequest";
-import { UpdateCareerRequest } from "../../dto/updateCareerRequest";
+import { CreateCareerRequest } from "../../models/dto/createCareerRequest";
+import { UpdateCareerRequest } from "../../models/dto/updateCareerRequest";
 
 const Careers: React.FC = () => {
 

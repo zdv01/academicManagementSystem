@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { User } from '../models/User';
-import { ApiResponse } from '../dto/apiResponse';
-import { CreateUserRequest } from '../dto/createUserRequest';
-import { UpdateUserRequest } from '../dto/updateUserRequest';
-import { ApiUser } from '../dto/apiUser';
+import { ApiResponse } from '../models/dto/apiResponse';
+import { CreateUserRequest } from '../models/dto/createUserRequest';
+import { UpdateUserRequest } from '../models/dto/updateUserRequest';
+import { ApiUser } from '../models/dto/apiUser';
 const API_URL = import.meta.env.VITE_API_URL + '/users' || '';
 
 class UserService {

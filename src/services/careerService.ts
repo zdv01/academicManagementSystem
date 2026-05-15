@@ -2,11 +2,11 @@ import axios from "axios";
 
 import { Career } from "../models/Career";
 
-import { ApiCareer } from "../dto/apiCareer";
-import { ApiResponse } from "../dto/apiResponse";
+import { ApiCareer } from "../models/dto/apiCareer";
+import { ApiResponse } from "../models/dto/apiResponse";
 
-import { CreateCareerRequest } from "../dto/createCareerRequest";
-import { UpdateCareerRequest } from "../dto/updateCareerRequest";
+import { CreateCareerRequest } from "../models/dto/createCareerRequest";
+import { UpdateCareerRequest } from "../models/dto/updateCareerRequest";
 
 const API_URL = import.meta.env.VITE_API_URL + "/academic/careers" || "";
 

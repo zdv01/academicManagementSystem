@@ -20,10 +20,10 @@ import { semesterService } from "../../services/semesterService";
 import { careerService } from "../../services/careerService";
 
 import { CreateSemesterRequest }
-from "../../dto/createSemesterRequest";
+from "../../models/dto/createSemesterRequest";
 
 import { UpdateSemesterRequest }
-from "../../dto/updateSemesterRequest";
+from "../../models/dto/updateSemesterRequest";
 
 const Semesters: React.FC = () => {
 
