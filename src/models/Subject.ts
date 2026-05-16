@@ -1,2 +1,16 @@
-export interface Subject{
+export interface Subject {
+    id: string;
+
+    name: string;
+
+    code: string;
+
+    description: string | null;
+
+    credits: number;
+
+    is_active: boolean;
+
+    created_at: string;
+    updated_at: string;
 }
