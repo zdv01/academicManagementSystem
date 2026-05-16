@@ -6,6 +6,7 @@ const usersPage = lazy(() => import('../pages/Users/Users'));
 const AssociateRubric = lazy(() => import('../pages/Evaluations/AssociateRubric'));
 const careersPage = lazy(() => import('../pages/Careers/Career'));
 const semestersPage = lazy(() => import('../pages/Semesters/Semester'));
+const studyPlanPage = lazy(() => import('../pages/StudyPlans/StudyPlans'));
 // const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
@@ -32,6 +33,11 @@ const coreRoutes = [
     path: '/semesters',
     title: 'Semesters',
     component: semestersPage,
+  },
+  {
+    path: '/study-plan',
+    title: 'Study Plan',
+    component: studyPlanPage,
   },
 ];
 
