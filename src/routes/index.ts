@@ -11,6 +11,7 @@ const CreateRubric = lazy(() => import('../pages/Rubrics/CreateRubric'));
 const DefineScales = lazy(() => import('../pages/Rubrics/DefineScales'));
 const GradeStudent = lazy(() => import('../pages/Evaluations/GradeStudent'));
 const RegisterFinalGrades = lazy(() => import('../pages/Evaluations/RegisterFinalGrades'));
+const groupsPage = lazy(() => import('../pages/Groups/Groups'));
 // const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
@@ -37,6 +38,11 @@ const coreRoutes = [
     path: '/evaluations/associate-rubric',
     title: 'Associate Rubric',
     component: AssociateRubric,
+  },
+  {
+    path: '/groups',
+    title: 'Groups',
+    component: groupsPage,
   },
   {
     path: '/evaluations/grade',
