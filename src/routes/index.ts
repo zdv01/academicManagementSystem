@@ -10,11 +10,8 @@ const studyPlanPage = lazy(() => import('../pages/StudyPlans/StudyPlans'));
 const CreateRubric = lazy(() => import('../pages/Rubrics/CreateRubric'));
 const DefineScales = lazy(() => import('../pages/Rubrics/DefineScales'));
 const GradeStudent = lazy(() => import('../pages/Evaluations/GradeStudent'));
-<<<<<<< HEAD
 const subjectsPage = lazy(() => import('../pages/Subjects/Subjects'));
-=======
 const RegisterFinalGrades = lazy(() => import('../pages/Evaluations/RegisterFinalGrades'));
->>>>>>> fd258b1fcf62d87f7e0a972a18bc959c8a552095
 const groupsPage = lazy(() => import('../pages/Groups/Groups'));
 // const prb = lazy(() => import('../pages/Prove'));
 
