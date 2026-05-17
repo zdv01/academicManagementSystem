@@ -138,6 +138,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Plan de estudio
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/subjects"
+                  className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 hover:bg-graydark"
+                >
+                  Asignaturas
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/groups"
+                  className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 hover:bg-graydark"
+                >
+                  Grupos
+                </NavLink>
+              </li>
             </ul>
           </div>
         </nav>

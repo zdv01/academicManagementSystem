@@ -10,6 +10,8 @@ const studyPlanPage = lazy(() => import('../pages/StudyPlans/StudyPlans'));
 const CreateRubric = lazy(() => import('../pages/Rubrics/CreateRubric'));
 const DefineScales = lazy(() => import('../pages/Rubrics/DefineScales'));
 const GradeStudent = lazy(() => import('../pages/Evaluations/GradeStudent'));
+const subjectsPage = lazy(() => import('../pages/Subjects/Subjects'));
+const groupsPage = lazy(() => import('../pages/Groups/Groups'));
 // const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
@@ -56,6 +58,16 @@ const coreRoutes = [
     path: '/study-plan',
     title: 'Study Plan',
     component: studyPlanPage,
+  },
+  {
+    path: '/subjects',
+    title: 'Subjects',
+    component: subjectsPage,
+  },
+  {
+    path: '/groups',
+    title: 'Groups',
+    component: groupsPage,
   },
 ];
 
