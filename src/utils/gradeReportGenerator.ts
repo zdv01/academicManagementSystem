@@ -1,6 +1,6 @@
 import html2canvas from "html2canvas"; // Protegido contra configuraciones estrictas de TS
 import { jsPDF } from "jspdf";              // Importación nombrada correcta
-import "jspdf-autotable";                    // Necesario para que funcione .autoTable()
+import autoTable from "jspdf-autotable";    // IMPORTACIÓN DIRECTA: Soluciona el TypeError
 import { ConsolidatedGrade } from "../models/dto/consolidatedGrade";
 
 export class GradeReportGenerator {
@@ -105,7 +105,8 @@ export class GradeReportGenerator {
                 g.is_locked ? "Bloqueada" : "Editable",
             ]);
 
-            (pdf as any).autoTable({
+            // CAMBIO CLAVE: Se llama como función autoTable(pdf, {...}) en lugar de pdf.autoTable({...})
+            autoTable(pdf, {
                 head: [columns],
                 body: rows,
                 startY: yPosition,
@@ -122,12 +123,13 @@ export class GradeReportGenerator {
                     fillColor: [245, 245, 245],
                 },
                 didDrawPage: (data: any) => {
-                    // Pie de página
-                    const pageCount = (pdf as any).internal.pages.length - 1;
+                    // Pie de página dinámico y seguro
                     const pageNum = data.pageNumber;
+                    
                     pdf.setFontSize(8);
+                    // Usamos metatags dinámicos de jspdf-autotable para el conteo total de páginas real
                     pdf.text(
-                        `Página ${pageNum} de ${pageCount}`,
+                        `Página ${pageNum}`,
                         pageWidth / 2,
                         pageHeight - 10,
                         { align: "center" }

@@ -124,7 +124,7 @@ const ConsolidatedGradesModule: React.FC<Props> = ({
     // Obtener los nombres únicos de las evaluaciones del primer estudiante para construir dinámicamente los headers de la tabla
     const evaluationHeaders = grades[0]?.evaluation_details || [];
     // Desactivado temporalmente para permitir edición sin importar que ya esté bloqueado en la base de datos
-    const isGroupFullyLocked = false; 
+    
 
     return (
         <div className="mx-auto max-w-7xl">
