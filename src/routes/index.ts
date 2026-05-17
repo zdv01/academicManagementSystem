@@ -7,6 +7,9 @@ const AssociateRubric = lazy(() => import('../pages/Evaluations/AssociateRubric'
 const careersPage = lazy(() => import('../pages/Careers/Career'));
 const semestersPage = lazy(() => import('../pages/Semesters/Semester'));
 const studyPlanPage = lazy(() => import('../pages/StudyPlans/StudyPlans'));
+const CreateRubric = lazy(() => import('../pages/Rubrics/CreateRubric'));
+const DefineScales = lazy(() => import('../pages/Rubrics/DefineScales'));
+const GradeStudent = lazy(() => import('../pages/Evaluations/GradeStudent'));
 // const prb = lazy(() => import('../pages/Prove'));
 
 const coreRoutes = [
@@ -14,6 +17,16 @@ const coreRoutes = [
   //   path: "/prove",
   //   component: prb,
   // },
+  {
+    path: '/rubrics/create',
+    title: 'Create Rubric',
+    component: CreateRubric,
+  },
+  {
+    path: '/rubrics/:rubricId/scales',
+    title: 'Define Scales',
+    component: DefineScales,
+  },
   {
     path: '/users',
     title: 'User List',
@@ -23,6 +36,11 @@ const coreRoutes = [
     path: '/evaluations/associate-rubric',
     title: 'Associate Rubric',
     component: AssociateRubric,
+  },
+  {
+    path: '/evaluations/grade',
+    title: 'Grade Student',
+    component: GradeStudent,
   },
   {
     path: '/careers',

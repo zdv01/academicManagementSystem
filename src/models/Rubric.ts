@@ -2,7 +2,7 @@ export interface Rubric {
     id: string;
     title: string;
     description: string;
-    subject_id: string;
+    subject_id?: string;
     is_public: boolean;
     is_archived: boolean;
     created_at: string;
